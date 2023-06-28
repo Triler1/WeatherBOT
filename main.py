@@ -2,10 +2,10 @@ import requests
 
 from aiogram import Bot, Dispatcher, executor, types
 
-weather_token = "4c25c1888a1a49538ab172439232606"
-bot_token = "6005280293:AAEA7fHsRHoI4sXaFAXQMm5ECWrsXLNLVVQ"
+weather_token = '4c25c1888a1a49538ab172439232606'
+API_TOKEN = '6005280293:AAEA7fHsRHoI4sXaFAXQMm5ECWrsXLNLVVQ'
 
-bot = Bot(bot_token)
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
