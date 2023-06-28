@@ -2,8 +2,8 @@ import requests
 
 from aiogram import Bot, Dispatcher, executor, types
 
-weather_token = '4c25c1888a1a49538ab172439232606'
-API_TOKEN = '6005280293:AAEA7fHsRHoI4sXaFAXQMm5ECWrsXLNLVVQ'
+WEATHER_TOKEN = '<WEATHER-TOKEN>'
+API_TOKEN = '<BOT-TOKEN>'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
@@ -19,7 +19,7 @@ async def start_command(message: types.message):
 async def now_weather(message: types.message):
     try:
         city = message.text
-        request = requests.get(f"http://api.weatherapi.com/v1/current.json?key={weather_token}&q={city}&lang=ru")
+        request = requests.get(f"http://api.weatherapi.com/v1/current.json?key={WEATHER_TOKEN}&q={city}&lang=ru")
         weather = request.json()
         await message.answer(
             text=f"Погода: {weather['location']['name']}.\n{weather['current']['condition']['text']}.\n"
