@@ -1,1 +1,2 @@
-# ☁ Погодный Telegram Бот
+# Telegram weather bot
+No description, sorry :3
