@@ -8,12 +8,10 @@ API_TOKEN = '<BOT-TOKEN>'
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.message):
     await message.answer(
         text="Привет, я WeatherBOT! Я могу узнать погоду в любом городе. Просто напиши название города.")
-
 
 @dp.message_handler()
 async def now_weather(message: types.message):
