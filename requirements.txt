@@ -1,0 +1,5 @@
+aiogram==2.23.1
+apscheduler
+requests
+pymorphy2
+pymongo
