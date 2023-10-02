@@ -72,6 +72,7 @@ async def start_command(msg: types.message):
     value = ''
     for value in coll.find({"chat_id": msg.from_user.id}):
         notifications = value['city']
+    await bot.send_sticker(msg.from_user.id, "CAACAgIAAxkBAAM9YXfH5sCS-41cwfqE5wF6I25R3U4AAqkRAALI5XFJY-8zAfzb5vghBA")
     if (value == ''):
         coll.insert_one({"chat_id": msg.from_user.id, "city": save_city, "ct": False, "schedule": "", "number": 0, "forecast": False})
     if (notifications == ""):
