@@ -255,14 +255,14 @@ async def e(message: types.message):
             current = False
             coll.update_one({"chat_id": message.from_user.id}, {"$set": {"ct": False}})
         except KeyError:
-            await message.answer(text="✖️ Город не найден. Повторите попытку.")
+            await bot.send_message(chat_id=message.from_user.id, text="<i>✖️ Город не найден. Повторите попытку.</i>", parse_mode="HTML")
     elif (notifications == "process"):
         save_city = message.text
         request = requests.get(f"http://api.weatherapi.com/v1/current.json?key={weather_token}&q={save_city}&lang=ru")
         weather = request.json()
         try:
             if (weather['error']['code'] == 1006):
-                await message.answer(text="✖️Город не найден. Повторите попытку.")
+                await bot.send_message(chat_id=message.from_user.id, text="<i>✖️ Город не найден. Повторите попытку.</i>", parse_mode="HTML")
         except KeyError:
             for i in range(100):
                 schedule = f'weather{i}'
@@ -287,7 +287,7 @@ async def e(message: types.message):
                 declination = 'день'
             else:
                 declination = 'дня'
-            await bot.send_message(chat_id=message.from_user.id, text=f"Погода в <b>{loct.word.title()}</b> на {ct['number']} {declination}:", parse_mode="HTML")
+            await bot.send_message(chat_id=message.from_user.id, text=f"Погода в <b><i>{loct.word.title()}</i></b> на <b><i>{ct['number']} {declination}</i></b>:", parse_mode="HTML")
             for i in weather['forecast']['forecastday']:
                 if (i['day']['condition']['text'] == 'Ясно'):
                     emoji = '🌕'
