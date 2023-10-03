@@ -12,7 +12,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 WEATHER_TOKEN = '<WEATHER-TOKEN>'
 API_TOKEN = '<BOT-TOKEN>'
 
-client = pymongo.MongoClient('MONGO(')
+client = pymongo.MongoClient('MONGO-CONNECT')
 db = client.test
 coll = db.users
 
@@ -108,33 +108,33 @@ async def schedule_weather(message: types.message):
     scheduler.remove_job(f"{ct['schedule']}")
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"city": ""}})
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"schedule": ""}})
-    await bot.send_message(chat_id=message.from_user.id, text=f"Уведомление о погоде отключено.", reply_markup=kb)
+    await bot.send_message(chat_id=message.from_user.id, text=f"<i>Уведомление о погоде отключено.</i>", reply_markup=kb, parse_mode='html')
   else:
-    await bot.send_message(chat_id=message.from_user.id, text=f"Включите уведомление.", reply_markup=kb)
+    await bot.send_message(chat_id=message.from_user.id, text=f"<i>Включите уведомление.</i>", reply_markup=kb, parse_mode='html')
 
 @dp.message_handler(Text(equals="💵 Поддержать автора"))
 async def buy(message: types.message):
-    await bot.send_message(message.chat.id, '📈 Каждый донат мотивирует развивать проект', reply_markup=ikb1)
+    await bot.send_message(message.chat.id, '<i>📈 Каждый донат мотивирует развивать проект</i>', reply_markup=ikb1, parse_mode='html')
     
 @dp.callback_query_handler(text='1')
 async def callback(message: types.Message):
     await bot.delete_message(message.from_user.id, message.message.message_id)
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"number": 1}})
-    await bot.send_message(chat_id=message.from_user.id, text="Введите название города, о котором хотите узнать прогноз погоды:")
+    await bot.send_message(chat_id=message.from_user.id, text="<i>Введите название города, о котором хотите узнать прогноз погоды:</i>", parse_mode='html')
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"forecast": True}})
 
 @dp.callback_query_handler(text='2')
 async def callback(message: types.Message):
     await bot.delete_message(message.from_user.id, message.message.message_id)
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"number": 2}})
-    await bot.send_message(chat_id=message.from_user.id, text="Введите название города, о котором хотите узнать прогноз погоды:")
+    await bot.send_message(chat_id=message.from_user.id, text="<i>Введите название города, о котором хотите узнать прогноз погоды:</i>", parse_mode='html')
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"forecast": True}})
 
 @dp.callback_query_handler(text='3')
 async def callback(message: types.Message):
     await bot.delete_message(message.from_user.id, message.message.message_id)
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"number": 3}})
-    await bot.send_message(chat_id=message.from_user.id, text="Введите название города, о котором хотите узнать прогноз погоды:")
+    await bot.send_message(chat_id=message.from_user.id, text="<i>Введите название города, о котором хотите узнать прогноз погоды:</i>", parse_mode='html')
     coll.update_one({"chat_id": message.from_user.id}, {"$set": {"forecast": True}})
 
 @dp.message_handler()
@@ -317,17 +317,12 @@ async def e(message: types.message):
             current = False
             coll.update_one({"chat_id": message.from_user.id}, {"$set": {"forecast": False}})
         except KeyError:
-            await message.answer(text="✖️ Город не найден. Повторите попытку.")
+            await bot.send_message(chat_id=message.from_user.id, text="<i>✖️ Город не найден. Повторите попытку.</i>", parse_mode="HTML")
     else:
         if (notifications == ""):
-            await bot.send_message(chat_id=message.from_user.id, text=f"Выберите нужную функцию.", reply_markup=kb)
+            await bot.send_message(chat_id=message.from_user.id, text="<i>Выберите нужную функцию.</i>", reply_markup=kb, parse_mode="HTML")
         else:
-            await bot.send_message(chat_id=message.from_user.id, text=f"Выберите нужную функцию.", reply_markup=kb1)
+            await bot.send_message(chat_id=message.from_user.id, text="<i>Выберите нужную функцию.</i>", reply_markup=kb1, parse_mode="HTML")
 
 if __name__ == '__main__':
     executor.start_polling(dp, on_startup=on_startup)
-
-
-
-if __name__ == '__main__':
-    executor.start_polling(dp)
